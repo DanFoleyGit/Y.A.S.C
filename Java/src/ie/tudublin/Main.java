@@ -18,6 +18,7 @@ public class Main{
 		Main main = new Main();
 		System.out.println("Hello World");
 		main.yasc();
+		
 	
 			
 	}
