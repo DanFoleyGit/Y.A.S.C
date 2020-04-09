@@ -12,7 +12,7 @@ public class Ship extends GameObject
 
     public Ship(YASC yasc, float x, float y, float speed, float size)
     {
-        super(yasc, x, y, rotation, speed);
+        super(yasc, x, y, 0, speed);
         this.size = size;
         fireRate = 20;
         toPass = 1 / (float) fireRate;
@@ -32,33 +32,136 @@ public class Ship extends GameObject
 
         yasc.line(halfSize, halfSize, 0, 0);
         yasc.line(0, 0, - halfSize, halfSize);
+        yasc.popMatrix();
         yasc.text("AMMO:" + ammo, pos.x +20, pos.y);
     }
 
     public void update()
     {
         forward.x = (float) Math.sin(rotation);
-        forward.y = - (float) Math.sin(rotation);
+        forward.y = - (float) Math.cos(rotation);
 
-        if (yasc.checkKey("w")){
+        if (yasc.checkKey('w'))
+        {
             pos.add(forward);
         }
 
-        if (yasc.checkKey("s")){
+        if (yasc.checkKey('s'))
+        {
             pos.x -= forward.x;
             pos.y -= forward.y;
         }
 
-        if (yasc.checkKey("a")){
+        if (yasc.checkKey('a'))
+        {
             rotation -= 0.1f;
         }
 
-        if (yasc.checkKey("d")){
+        if (yasc.checkKey('d'))
+        {
             rotation += 0.1f;
         }
 
-        //if (yasc.checkKey(" ")) && ellapsed >= topass
+        if (yasc.checkKey(' ') && ellapsed >= toPass && ammo > 0)
+        {
+            //make bullet class
+            PVector spawnPoint = PVector.add( pos, PVector.mult(forward, 25));
+            Bullet b = new Bullet(yasc, spawnPoint.x, spawnPoint.y, rotation + yasc.random(-0.1f, 0.1f));
+            yasc.gameObjects.add(b);
+            ellapsed = 0;
+            ammo --;
+        }
+
+        //allow the ship to go to the other side if it hits a border
+        if (pos.x < 0){
+            pos.x = yasc.width;
+        }
+
+        if (pos.x > yasc.width){
+            pos.x = 0;
+        }
+        
+        if (pos.y < 0){
+            pos.y = yasc.width;
+        }
+
+        if (pos.y > yasc. height){
+            pos.y = 0;
+        }
+
+        ellapsed += yasc.timeDelta;
+        yasc.text("Ellapsed: "+ ellapsed, 10, 200);
 
 
+    }
+
+    /**
+     * @return the size
+     */
+    public float getSize() {
+        return size;
+    }
+
+    /**
+     * @param size the size to set
+     */
+    public void setSize(float size) {
+        this.size = size;
+    }
+
+    /**
+     * @return the fireRate
+     */
+    public int getFireRate() {
+        return fireRate;
+    }
+
+    /**
+     * @param fireRate the fireRate to set
+     */
+    public void setFireRate(int fireRate) {
+        this.fireRate = fireRate;
+    }
+
+    /**
+     * @return the toPass
+     */
+    public float getToPass() {
+        return toPass;
+    }
+
+    /**
+     * @param toPass the toPass to set
+     */
+    public void setToPass(float toPass) {
+        this.toPass = toPass;
+    }
+
+    /**
+     * @return the ellapsed
+     */
+    public float getEllapsed() {
+        return ellapsed;
+    }
+
+    /**
+     * @param ellapsed the ellapsed to set
+     */
+    public void setEllapsed(float ellapsed) {
+        this.ellapsed = ellapsed;
+    }
+
+    /**
+     * @return the ammo
+     */
+    public int getAmmo() {
+        return ammo;
+    }
+
+    /**
+     * @param ammo the ammo to set
+     */
+    public void setAmmo(int ammo) {
+        this.ammo = ammo;
     }
 }

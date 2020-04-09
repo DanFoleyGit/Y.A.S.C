@@ -13,9 +13,9 @@ public abstract class GameObject
     public GameObject(YASC yasc, float x, float y, float rotation, float speed)
     {
         this.yasc = yasc;
-        pos = new PVector(x,y);
+        pos = new PVector(x, y);
         forward = new PVector(0, -1);
-        this.rotation= rotation;
+        this.rotation = rotation;
         this.speed = speed;
     }
 
