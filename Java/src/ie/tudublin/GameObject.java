@@ -19,6 +19,28 @@ public abstract class GameObject
         this.speed = speed;
     }
 
+    //checks if a gameobject has collided with the boundries
+    //and translates it to the other side of the screen
+    //
+    public void checkBoundry()
+    {
+        if (pos.x < 0){
+            pos.x = yasc.width;
+        }
+
+        if (pos.x > yasc.width){
+            pos.x = 0;
+        }
+        
+        if (pos.y < 0){
+            pos.y = yasc.width;
+        }
+
+        if (pos.y > yasc. height){
+            pos.y = 0;
+        }
+    }
+
     public abstract void update();
     public abstract void render();
 

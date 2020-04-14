@@ -73,21 +73,7 @@ public class Ship extends GameObject
         }
 
         //allow the ship to go to the other side if it hits a border
-        if (pos.x < 0){
-            pos.x = yasc.width;
-        }
-
-        if (pos.x > yasc.width){
-            pos.x = 0;
-        }
-        
-        if (pos.y < 0){
-            pos.y = yasc.width;
-        }
-
-        if (pos.y > yasc. height){
-            pos.y = 0;
-        }
+        checkBoundry();
 
         ellapsed += yasc.timeDelta;
         yasc.text("Ellapsed: "+ ellapsed, 10, 200);

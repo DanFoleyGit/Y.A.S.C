@@ -19,6 +19,15 @@ public class Bullet extends GameObject
     }
 
     //add in check collision
+    public void checkCollisions()
+    {
+        float dist = PVector.dist(yasc.aiShip.getPos(), pos);
+        if (dist < yasc.aiShip.size / 2)
+        {
+            yasc.aiShip.setHealth(yasc.aiShip.getHealth() - 1);
+            yasc.gameObjects.remove(this);
+        }
+    }
 
     public void update()
     {
@@ -28,26 +37,29 @@ public class Bullet extends GameObject
         //pos += forawrd*speed 
         pos.add(PVector.mult(forward, speed));
 
-        if (pos.x < 0){
-            pos.x = yasc.width;
-        }
+        checkBoundry();
 
-        if (pos.x > yasc.width){
-            pos.x = 0;
-        }
+        // if (pos.x < 0){
+        //     pos.x = yasc.width;
+        // }
+
+        // if (pos.x > yasc.width){
+        //     pos.x = 0;
+        // }
         
-        if (pos.y < 0){
-            pos.y = yasc.width;
-        }
+        // if (pos.y < 0){
+        //     pos.y = yasc.width;
+        // }
 
-        if (pos.y > yasc. height){
-            pos.y = 0;
-        }
+        // if (pos.y > yasc. height){
+        //     pos.y = 0;
+        // }
         alive += yasc.timeDelta;
         if (alive >= 5.0){
             yasc.gameObjects.remove(this);
         }
         //call CheckCollisons
+        checkCollisions();
     }
     float alive;
 }

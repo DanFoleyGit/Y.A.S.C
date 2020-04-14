@@ -1,0 +1,41 @@
+package ie.tudublin;
+
+import processing.core.PVector;
+
+public class AmmoPowerup extends GameObject implements Powerup
+{
+    public AmmoPowerup(YASC yasc)
+    {
+        super(yasc, yasc.random(0, yasc.width), yasc.random(0, yasc.height), 0 , 2);
+        forward.x = yasc.random(-1, 1);
+        forward.y = yasc.random(-1, 1);
+        forward.normalize();
+    }
+
+    @Override
+    public void update()
+    {
+        pos.add(PVector.mult(forward, speed));
+        rotation += 0.01f;
+
+        checkBoundry();
+    }
+
+    int size = 20;
+
+    @Override
+    public void render()
+    {
+        yasc.pushMatrix();
+        yasc.translate(pos.x, pos.y);
+        yasc.rotate(rotation);
+        yasc.rect(-size / 2, -size / 2, size, size);
+        yasc.popMatrix();
+    }
+    
+    @Override
+    public void applyTo(Ship s) {
+        s.setAmmo(s.getAmmo() + 10);
+        
+    }
+}
